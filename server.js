@@ -1,4 +1,5 @@
 var express = require("express");
+var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var logger = require("morgan");
 
@@ -17,12 +18,17 @@ mongoose.connect(MONGODB_URI);
 var app = express();
 var exphbs = require("express-handlebars");
 
+app.engine("handlebars", exphbs({ defaultLayout: "main"}));
+app.set("view engine", "handlebars");
+
 app.use(logger("dev"));
 //Parse request body as JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 //Make public a static folder
 app.use(express.static("public"));
+
+app.use(logger("dev"));
 
 //** ROUTES **//
 
